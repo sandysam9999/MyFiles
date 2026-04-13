@@ -12,16 +12,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Install Tomcat
+      - name: Create WAR file manually
         run: |
-          sudo apt-get update
-          sudo apt-get install -y tomcat9
-
-      - name: Build with Ant
-        run: ant -Djee.server.home=/usr/share/tomcat9
+          mkdir -p build/WEB-INF/classes
+          cp -r src/* build/WEB-INF/classes/
+          cp -r web/* build/
+          cd build
+          jar -cvf MyFiles.war .
