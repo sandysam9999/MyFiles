@@ -19,4 +19,4 @@ jobs:
           distribution: 'temurin'
 
       - name: Build Project
-        run: echo "Build Successful"
+        run: ant
