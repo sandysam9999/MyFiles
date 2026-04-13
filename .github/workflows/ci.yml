@@ -18,5 +18,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build Project
-        run: ant
+      - name: Install Tomcat
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tomcat9
+
+      - name: Build with Ant
+        run: ant -Djee.server.home=/usr/share/tomcat9
