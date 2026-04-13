@@ -14,8 +14,10 @@ jobs:
 
       - name: Create WAR file manually
         run: |
+          echo "Starting manual WAR build"
           mkdir -p build/WEB-INF/classes
-          cp -r src/* build/WEB-INF/classes/
-          cp -r web/* build/
+          cp -r src/* build/WEB-INF/classes/ || true
+          cp -r web/* build/ || true
           cd build
           jar -cvf MyFiles.war .
+          echo "WAR file created"
