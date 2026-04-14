@@ -1,29 +1,52 @@
-name: Java CI Build
+name: Deploy Java Web App to EC2
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main   # change if your branch is master
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
 
-      - name: Create WAR file manually
-        run: |
-          echo "Starting manual WAR build"
-          mkdir -p build/WEB-INF/classes
-          cp -r src/* build/WEB-INF/classes/ || true
-          cp -r web/* build/ || true
-          cd build
-          jar -cvf MyFiles.war .
-          echo "WAR file created"
-         
-      - name: Upload WAR
-        uses: actions/upload-artifact@v4
-        with:
-          name: myfiles-war
-          path: build/MyFiles.war
+    # Step 1: Get code from GitHub
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Java
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    # Step 3: Build WAR file using Ant
+    - name: Build WAR
+      run: ant clean dist
+
+    # Step 4: Rename WAR (optional but useful)
+    - name: Rename WAR
+      run: mv dist/*.war myfiles.war
+
+    # Step 5: Copy WAR to EC2
+    - name: Copy WAR to EC2
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        source: "myfiles.war"
+        target: "/home/ubuntu/"
+
+    # Step 6: Deploy WAR in Tomcat
+    - name: Deploy to Tomcat
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          sudo mv /home/ubuntu/myfiles.war /opt/tomcat/webapps/
+          sudo systemctl restart tomcat

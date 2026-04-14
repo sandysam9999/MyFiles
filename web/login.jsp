@@ -16,7 +16,7 @@
    <body>
     <div class="container">
         <h1>Login</h1>
-        <form action="LoginServlet" method="post"> <!-- Change method to "post" -->
+        <form action="login" method="post"> <!-- Change method to "post" -->
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" required><br>
             <label for="password">Password:</label>
