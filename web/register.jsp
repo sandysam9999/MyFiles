@@ -15,7 +15,7 @@
    <body>
     <div class="container">
         <h1>Register</h1>
-        <form action="<%= request.getContextPath() %>/RegisterServlet" method="post">
+       <form action="register" method="post">
     <label>Username:</label>
     <input type="text" name="username" required><br>
 
@@ -25,9 +25,9 @@
     <label>Password:</label>
     <input type="password" name="password" required><br>
 
-    <button type="submit">Register</button>
+   <button type="submit">Register</button>
 </form>
-            <button type="submit">Register</button>
+            
         
     
         <p><a href="index.html">Back to Home</a></p>

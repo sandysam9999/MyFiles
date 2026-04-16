@@ -29,7 +29,7 @@ if (user == null) {
     <button type="submit">Remove Files</button>
 </form>
 
-<form action="logout">
+<form action="login.jsp">
     <button type="submit">Logout</button>
 </form>
     </div>

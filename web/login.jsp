@@ -3,7 +3,7 @@
     Created on : Apr 11, 2026, 6:45:46 PM
     Author     : sandy
 --%>
-@WebServlet("/login")
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

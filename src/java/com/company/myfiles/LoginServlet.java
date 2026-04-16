@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author sandy
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionVID=1L;
     private static UserDao userDao=new UserDaoImp();
